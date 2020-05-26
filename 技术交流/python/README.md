@@ -16,7 +16,7 @@ python c:\修改文件.py
 ```
 
 ### 使用python循环修改某一个文件，需要判断是否存在要修改的内容，不存在就修改
-```angular2
+```angular2python
 
 import re
 import time
