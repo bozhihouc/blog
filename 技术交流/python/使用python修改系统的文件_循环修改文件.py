@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020年5月26日, 0026 14:07
 # @Author  : 862897316@qq.com
-# @File    : 修改文件.py
+# @File    : 使用python修改系统的文件_循环修改文件.py
 # @Software: PyCharm
 
 import re
