@@ -22,10 +22,10 @@ apt-get install net-tools
 ```angular2html
 service --status-all
 ```
-### mysql8.0版本修改密码
+### mysql8.0版本修改密码(测试未通过)
 ```angular2html
 use mysql;
-
 ALTER user 'root'@'localhost' IDENTIFIED BY 'root'
-
+一直在崩溃
+1064（42000）
 ```
