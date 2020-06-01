@@ -36,5 +36,6 @@ create user 'phpcms'@'%' identified by '密码';
 create database `phpcms_数据库名称` default character set utf8_general_ci;
 允许远程登陆授权 *.* 所有数据库， phpcms用户在%所有IP均可登陆
 grant all privileges on *.* to 'phpcms'@'%' with grant option;
+还是出现问题，先试试centos，centos可以，再转战ubuntu
 
 ```
