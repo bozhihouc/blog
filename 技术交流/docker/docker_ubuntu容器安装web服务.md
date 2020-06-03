@@ -22,20 +22,25 @@ apt-get install net-tools
 ```angular2html
 service --status-all
 ```
-### mysql8.0版本修改密码(测试未通过)
+
+### 在物理机安装mysql8.0会提示修改密码，然后安装phpcms没有发现问题
 ```angular2html
-use mysql;
-ALTER user 'root'@'localhost' IDENTIFIED BY 'root'
-一直在崩溃
-1064（42000）
-待测试
-mysql8.0修改密码
-创建用户
-create user 'phpcms'@'%' identified by '密码';
-创建数据库
-create database `phpcms_数据库名称` default character set utf8_general_ci;
-允许远程登陆授权 *.* 所有数据库， phpcms用户在%所有IP均可登陆
-grant all privileges on *.* to 'phpcms'@'%' with grant option;
-还是出现问题，先试试centos，centos可以，再转战ubuntu
+这里测试docker 安装命令行库
+apt-get install libncurses5-dev
 
 ```
+### linux shell 图形编程
+```angular2html 实例
+#!/bin/bash
+
+whiptail --title "Test Message Box" --msgbox "Create a message box with whiptail. Choose Ok to continue." 10 60
+
+```
+### docker 安装其他版本的容器
+````angular2html
+在网站 https://hub.docker.com/ 搜索需要的容器
+在界面点击tags选择相应的版本
+
+如：docker pull ubuntu:16.04
+
+````
