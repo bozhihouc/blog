@@ -9,7 +9,7 @@ mysql
 ### ubuntu 安装nginx mysql php
 ```angular2html
 apt-get update
-apt-get install apache2 php php-fpm php-mysql mysql-server
+apt-get install apache2 php php-gd php-fpm libapache2-mod-php php-mysql mysql-server
 
 ```
 
