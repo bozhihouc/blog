@@ -30,7 +30,7 @@ apt-get install libncurses5-dev
 
 ```
 ### linux shell 图形编程
-```angular2html 实例
+```angular2-html 实例
 #!/bin/bash
 
 whiptail --title "Test Message Box" --msgbox "Create a message box with whiptail. Choose Ok to continue." 10 60
