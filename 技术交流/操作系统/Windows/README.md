@@ -17,3 +17,12 @@ control userpasswords2
 > 
 > 然后将继续展开 `Domains\Account\Users` 找到添加的账户导出注册表，找到对应制的F替换成Administrator账户的F值，导出
 >
+
+### 创建服务
+```angular2html
+sc create 服务名称 start= auto binPath= "C:\haya.exe"
+```
+### 删除服务
+````angular2html
+sc delete 服务名称
+````
