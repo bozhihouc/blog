@@ -12,9 +12,9 @@ $ cd samba-4.6.3
 $ ./configure --prefix=/soft/samba
 $ make && make install
 ```
-![](images/01.png)
+ ![](images/01.png)
 
-![](images/02.png)
+ ![](images/02.png)
 
 ### 添加动态链接库
 
