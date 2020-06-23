@@ -14,7 +14,7 @@ $ make && make install
 ```
  ![](images/01.png)
 
- ![](images/02.png)
+ ![](images/02-1.png)
 
 ### 添加动态链接库
 
