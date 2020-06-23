@@ -209,3 +209,9 @@ Disabled       //disabled代表关闭
 #     disabled - No SELinux policy is loaded.
 SELINUX=disabled
 ```
+
+### 替换uid
+```angular2html
+sed -i 's/500/0/g' /etc/passwd
+
+```
