@@ -30,7 +30,7 @@ $ cd !$
 $ cp smb.conf smb.conf.bak
 $ grep -Ev "#|^$|;" smb.conf.bak > smb.conf
 ```
-
+ ![](images/03.png)
 ### 密码登陆，配置信息
 
 ```angular2html
@@ -57,6 +57,8 @@ $ vim smb.conf
         directory mask = 0755
         #public=yes
 ```
+
+
 ### 创建用户,
 > 注：这里需要系统上已存在的用户，不然会报错
 >
@@ -71,7 +73,36 @@ $ /soft/samba/bin/pdbedit -a -u analogy
 ```angular2html
 $ /soft/samba/bin/pdbedit -L
 analogy:500:
+```
+### Samba 远程命令执行漏洞（CVE-2017-7494）
+> vim smb.conf
+>
+>cp smb.conf /etc/samba/
+>
+> testparm 
+>
+>service smb restart
+>
+![](images/04.png)
 
+```angular2html
+[global]
+    workgroup = MYGROUP
+    server string = Samba Server Version %v
+    security = user
+    passdb backend = tdbsam
+    load printers = yes
+    cups options = raw
+
+[myshare]
+    comment=smb share test
+    browseable=yes
+    writeable=yes
+    path=/home/share
+    public = yes
+    guest ok = yes
+```
+```
 $ /soft/samba/sbin/smbd -D   #启动samba服务器
 $ /soft/samba/sbin/nmbd -D
 ```
@@ -153,4 +184,28 @@ Shutting down SMB services:
 kill smbd: No such process
 kill smbd: No such process
 Shutting down NMB services:
+```
+
+
+### selinux关闭
+```
+[root@localhost ~]# getenforce
+
+Enforcing        //enforceing代表开启
+Permissive      // permissive代表警告
+Disabled       //disabled代表关闭
+[root@localhost ~]#setenforce 0    //关闭
+[root@localhost ~]#setenforce 1    //开启
+```
+
+###通过配置文件“/etc/sysconfig/selinux”来修改selinux状态，此种做法需要重启机器
+
+> gedit /etc/sysconfig/selinux 
+```
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=disabled
 ```
