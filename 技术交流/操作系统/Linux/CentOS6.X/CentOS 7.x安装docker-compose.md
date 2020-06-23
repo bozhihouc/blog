@@ -1,4 +1,4 @@
-# CentOS 6安装docker-compose
+# CentOS 7安装docker-compose
 
 ###使用yum安装docker-compose时提示没有这个包
 
