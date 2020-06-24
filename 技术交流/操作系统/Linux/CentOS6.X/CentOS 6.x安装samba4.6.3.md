@@ -198,9 +198,11 @@ Disabled       //disabled代表关闭
 [root@localhost ~]#setenforce 1    //开启
 ```
 
-###通过配置文件“/etc/sysconfig/selinux”来修改selinux状态，此种做法需要重启机器
+### 通过配置文件“/etc/sysconfig/selinux”来修改selinux状态，此种做法需要重启机器
 
 > gedit /etc/sysconfig/selinux 
+
+
 ```
 # This file controls the state of SELinux on the system.
 # SELINUX= can take one of these three values:
@@ -209,9 +211,16 @@ Disabled       //disabled代表关闭
 #     disabled - No SELinux policy is loaded.
 SELINUX=disabled
 ```
+### 注：
+
+```angular2html
+若想使用msfconsole利用成功
+需要保持/soft/samba/etc/smb.conf 与 /etc/samba/smb.conf 一致
+```
 
 ### 替换uid
 ```angular2html
 sed -i 's/500/0/g' /etc/passwd
 
 ```
+
