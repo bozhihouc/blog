@@ -1,5 +1,5 @@
 # Windows Server 2012 安装.NET 3.5
->注意，使用此方法需要保留安装的iso文件，并挂载到磁盘
+> 注意，使用此方法需要保留安装的iso文件，并挂载到磁盘
 
 ### 启动服务器管理器,并选择添加角色和功能
 ![](images\windows12_01.png)
@@ -28,3 +28,7 @@
 ![](images\windows12_10.png)
 ### 等待安装完成即可
 ![](images\windows12_11.png)
+
+![](images\windows12_12.png)
+
+> 注意，使用此方法需要保留安装的iso文件，并挂载到磁盘
