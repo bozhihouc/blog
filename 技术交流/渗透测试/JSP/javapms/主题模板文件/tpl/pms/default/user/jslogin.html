@@ -1,0 +1,36 @@
+	<section id="top">
+		<div class="top-wrap s b">
+			<div class="tn-nav fl">
+                [#if user??]
+				<div class="tn-title">
+					<span class="tn-user"><i>欢迎您，<span>${user.username}</span></i></span>
+				</div>
+				<div class="tn-title">
+					<a href="${base}/member/index.jsp" class="tn-tab"><i>会员中心</i></a>
+				</div>
+				<div class="tn-title">
+					<a href="${base}/logout.jsp?nextUrl=${location!?html}" class="tn-tab"><i>退出登录</i></a>
+				</div>
+                [#else]
+				<div class="tn-title">
+					<a href="${base}/login.jsp" class="tn-tab"><i>会员登录</i></a>
+				</div>
+				<div class="tn-title">
+					<a href="${base}/reg.jsp" class="tn-tab"><i>会员注册</i></a>
+				</div> 
+                [/#if]
+      		</div>
+            
+			<div class="fr"> 
+				<div class="tn-title">
+					<a href="javascript:void(0);" onclick="SetHome(this,window.location)" class="tn-tab"><i>设为首页</i></a>
+				</div>
+				<div class="tn-title">
+					<a href="javascript:void(0);" onclick="AddFavorite(window.location,document.title)" class="tn-tab"><i>加入收藏</i></a>
+				</div>
+				<div class="tn-title">
+					<a target="_blank" href="${base}/guide/index.jsp" class="tn-tab"><i>网站导航</i> </a>
+				</div>             
+			</div>
+		</div>
+	</section>

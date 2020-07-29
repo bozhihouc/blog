@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${site.name} - Powered by qwertyuiopp</title>
+<meta content="${site.keywords!}" name="keywords" />
+<meta content="${site.description!}" name="description" />
+<meta name="author" content="javapms"/>
+<meta name="copyright" content="Copyright &copy; 2020 - 2020 All Rights Reserved."/>
+<link rel="shortcut icon" href="/${skin}/img/favicon.ico">
+<link href="/${skin}/css/style.css" rel="stylesheet"/>
+<script src="${comm}/js/jquery-1.8.3.js"></script>
+<!--[if IE]><script src="/${skin}/js/html5.js"></script><![endif]-->
+</head>
+
+<body>
+<!--header-->
+<header>
+	<!--top-->
+	[#include "../include/顶栏.html"/]
+	<!--/top-->
+    
+    <!-- top_search -->
+    [#include "../include/搜索栏.html"/]
+    <!-- /top_search -->
+
+	<!-- nav -->
+	[#include "../include/导航栏.html"/]
+    <!-- /nav -->
+</header>
+<!--/header--> 
+
+<!--ad_1-->
+[@Advert id='1'/]
+<!--ad_1-->
+
+<!--main_1-->
+<section class="s mt5 b">
+	<div class="ml">
+        <!--jdt-->
+		[@DocList tId='3' count='5' recommend='1']
+        <div class="focus-pic" id="focus-pic">
+            <div data-scro="list" log-type="toppic">
+                <ul>
+                    [#list list as a]
+                    <li class="item"[#if a_index == 0] style="left:0;"[/#if]>
+                        <a href="${a.url}" target="_blank" title="${a.title!}"><img src="${base}${a.getPicStyle('3')!}" alt="${a.title!}'/]"/></a>
+                        <h3><a href="${a.url}" target="_blank">[@StrLimit s=a.title l='16' r='<br/>'/]</a></h3>
+                        <div></div>
+                    </li>
+                    [/#list]
+                </ul>
+            </div>
+          
+            <div class="controler" data-scro="controler">
+            [#list list as b]<b[#if b_index == 0] class="down"[/#if]>${b_index+1}</b>[/#list]</div>
+            <div class="controler2" data-scro="controler2"><a href="javascript:;" class="prev"><i></i></a><a href="javascript:;" class="next"><i></i></a></div>  
+        </div>
+		<script src="/${skin}/js/focus.js"></script>
+        [/@DocList]
+        <!--/jdt-->
+        <div class="bor1 mt10">
+    		<div class="tit1"><h2>最新热评</h2></div>
+            <div class="h_comList mt5 mb5">
+                [@Comment count='10' checked='1']
+                <ul class="w96 comList">
+                [#list page.content as c]
+                <li onmouseover="this.style.background='#E6EFFD';" onmouseout="this.style.background='#F2F6FD';">
+                  <dl>
+                    <dt><a href="#" class="user">[#if c.user??]${c.user.username?html}[#else]网友[/#if]</a><a href="${base}/comment-${c.doc.id!}.jsp" target="_blank" class='ico'></a>评论<a title="${c.doc.title}" href="${c.doc.url}" target="_blank" class="blue">#[@StrLimit s=c.doc.title l='20'/]#</a></dt>
+                    <dd class="pic">
+                    <img [#if c.user??&&c.user.member??&&c.user.member.avatar??]src="${base}${c.user.member.avatar!}"[#else]src="/${skin}/img/face.png"[/#if]/></dd>
+                    <dd>[@StrLimit s=c.content?html l='40'/]</dd>
+                  </dl>
+                </li>
+                [/#list]
+                </ul>
+                [/@Comment]
+            </div>
+        </div>
+	</div>
+	<div class="mc">
+    	<div class="tit2"><h2>最新要闻</h2></div>
+		<div class="tt bline w96">
+			[@DocList tId='4' count='4' orderBy='2']
+			[#if list?size gt 0]
+        	[#assign a=list[0]]
+			<h2><a href="${a.url}" title="${a.title}" target="_blank">[@StrLimit s=a.title l='20'/]</a></h2>
+            <p>
+            [#list list as a]
+        	[#if a_index gt 0]
+            <a href="${a.url}" title="${a.title}" target="_blank">[#if a.shortTitle??&&a.shortTitle!='']${a.shortTitle!}[#else][@StrLimit s=a.title l='14' r='<br/>'/][/#if]</a>[/#if]
+            [/#list]
+            </p>
+            [/#if]
+			[/@DocList]
+		</div>
+        [@DocList count='18']
+        <ul class="nlist w96">
+			[#list list as a]
+            <li><a href="${a.url}" title="${a.title!}" target="_blank">[#if a.titleColor??&&a.titleColor!=""]<span style="color:${a.titleColor!}">[/#if][#if a.bold??&&a.bold]<strong>[/#if][@StrLimit s=a.title l='22' r='<br/>'/][#if a.bold??&&a.bold]</strong>[/#if][#if a.titleColor??&&a.titleColor!=""]</span>[/#if][#if a.isNew(1)]<img src="/${skin}/img/new.gif"/>[/#if]</a><em>${a.date?string('MM-dd')}</em></li>
+            [#if a_has_next && (a_index+1)%6 = 0]<li class="bb2"></li>[/#if]
+            [/#list]
+		</ul>
+		[/@DocList]
+	</div>
+	<div class="mr">
+ <!--   	<a href="http://www.javapms.com/help/index.jsp" target="_blank" title="javapms系统说明专题讲解"><img src="/${skin}/img/topic.jpg" alt="javapms系统说明专题讲解"/></a>
+        <a href="${base}/questionList.jsp" target="_blank" title="javapms问卷调查"><img src="/${skin}/img/wjdc.jpg" alt="javapms问卷调查" class="mt5"/></a>-->
+  		<div class="bor mt10">
+            <div class="tit">[@Channel id='48']<h2>${bean.name!}</h2><em><a href="${bean.url}" target="_blank">更多 &raquo;</a></em>[/@Channel]</div>
+            <div class="cont">
+            [@DocList mId='4' count='5' orderBy='2' callLevel='1']
+            [#if list?size gt 0]
+            [#assign a=list[0]]
+            <div class="twlist w92 mt5 pb5">
+              <a href="${a.url}" title="${a.title}" target="_blank" class="video"><img src="${base}${a.getPicStyle('0')!}"/><i></i></a>
+              <div class="in_text">
+                <h2><a href="${a.url}" title="${a.title}" target="_blank">[@StrLimit s=a.title l='20'/]</a></h2>
+                <p>[@StrLimit s=a.description l='14'/]<a href="${a.url}" target="_blank" class="blue">[详情]</a></p>
+              </div>
+            </div>
+            <ul class="nlist2 w92 pb5">
+            [#list list as a]
+            [#if a_index gt 0]
+                <li class="m4"><a href="${a.url}" title="${a.title}" target="_blank">[@StrLimit s=a.title l='15'/]</a></li>
+            [/#if]
+            [/#list]
+            </ul>
+            [/#if]
+            [/@DocList]
+            </div>
+        </div>
+        <div class="bor mt10">
+            <div class="tit"><h2>热点排行</h2></div>
+            <div class="cont">
+                [@DocList count='6' orderBy='4']
+                <ol class="ph2 w92">
+                [#list list as a]
+                    <li><a href="${a.url}" title="${a.title}" target="_blank">[@StrLimit s=a.title l='20'/]</a></li>
+                [/#list]
+                </ol>
+                [/@DocList]
+            </div>
+		</div> 		          
+    </div>
+</section>
+<!--/main_1-->
+
+<!--flink-->
+[#include "../include/友情链接栏.html"/]
+<!--flink-->
+
+<!--footer--> 
+[#include "../include/页脚.html"/] 
+<!--/footer-->
+
+<script src="/${skin}/js/com.js"></script>
+<script language="javascript">
+$(function() {
+  var scrtime;
+  $(".comList").hover(function(){
+	  clearInterval(scrtime);
+	 },function(){
+	  scrtime = setInterval(function(){
+	  var $ul = $(".comList");
+	  var liHeight = $ul.find("li:last").height();
+	  $ul.animate({marginTop : liHeight+20 +"px"},1000,function(){
+	  $ul.find("li:last").prependTo($ul);
+	  $ul.find("li:first").hide();
+	  $ul.css({marginTop:0});
+	  $ul.find("li:first").fadeIn(1000);
+	  }); 
+	 },3000);
+  }).trigger("mouseleave");
+})
+</script>
+
+<!--duilian-->
+[@Advert id='4'/]
+<!--/duilian-->
+<!--piaofu-->
+<script src="/${skin}/js/admove.js"></script>
+[@Advert id='5'/]
+<!--/piaofu-->
+</body>
+</html>

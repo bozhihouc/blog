@@ -1,0 +1,21 @@
+[#if !type??||type==0]
+<ul class="zx_list w98 mt5 mb5">
+    [#list page.content as board]
+	<li class="sLine">
+		<h6>
+			<em>${board.name!}：</em>${board.title!?html}
+		</h6>
+		<p>${board.content!?html}（${board.createTime?string("yyyy-MM-dd HH:mm:ss")}）</p>
+		[#if board.reply??]
+		<h6><em>回复：</em></h6>
+		<p class="red">${board.reply!?html}</p>
+		[/#if]
+	</li>
+	[/#list]
+	[#if page.totalPages gt 1]
+	[@Page pageType='2'/]
+	[/#if]
+</ul>
+[#elseif type==1]
+
+[/#if]

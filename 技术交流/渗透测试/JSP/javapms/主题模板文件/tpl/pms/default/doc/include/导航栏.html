@@ -1,0 +1,20 @@
+	<nav class="s b">
+        [@ChannelList]
+        <ul>
+            [#list list as c]
+        	<li[#if c_index==0 || (c_index+1)%6 = 0] class="nb"[/#if]><strong><a href="${c.url}" title="${c.name}">${c.name}</a></strong>
+        	[@ChannelList pId=c.id  count='4']
+        		[#list list as c]
+				<a href="${c.url}" target="_blank" title="${c.name}">${c.name}</a>
+				[/#list]
+        	[/@ChannelList]
+        	</li>
+        	[/#list]
+            <li><strong><a href="#" title="互动">互动</a></strong>
+				<a href="${base}/forum.jsp" target="_blank" title="论坛">论坛</a>
+				<a href="${base}/messageboard.jsp" target="_blank" title="留言板">留言板</a>
+				<a href="${base}/questionList.jsp" target="_blank" title="问卷调查">问卷调查</a>
+        	</li>
+        </ul>
+        [/@ChannelList]
+	</nav>

@@ -1,0 +1,15 @@
+<footer class="s mt5">
+[@VisitDay]昨日访问：${ycount!} &nbsp;|&nbsp; 今日访问 ：${tcount!} &nbsp;|&nbsp; 总访问 ： ${count!}[/@VisitDay]<br/>
+<a href="${base}/aboutus/index.jsp">关于我们</a> | <a href="${base}/guide/index.jsp">网站导航</a><br/>
+ICP备案号：暂无 &nbsp; Copyright &copy; 2020 - 2020 <a href="1" target="_blank">All Rights Reserved </a>
+</footer>
+<script type="text/javascript">
+  document.write(unescape("%3Cscript src='${base}/visitViews.jsp%3Furl%3D")+document.location.href+unescape("' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script language="javascript">
+$(function() {
+	$.get("${base}/jslogin.jsp",{},function(data){
+		$("#loginhtml").html(data);
+	},"html");
+})
+</script>

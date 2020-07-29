@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${title} - ${site.name} - Powered by XXX</title>
+<meta http-equiv="keywords" content="${doc.tagStr!}"/>
+<meta http-equiv="description" content="${doc.description!}"/>
+<meta name="author" content="javapms"/>
+<meta name="copyright" content="Copyright &copy; 2020 - 2020 All Rights Reserved."/>
+<link rel="shortcut icon" href="/${skin}/img/favicon.ico">
+<link href="/${skin}/css/style.css" rel="stylesheet"/>
+<script src="${comm}/js/jquery.js"></script>
+<!--[if IE]><script src="/${skin}/js/html5.js"></script><![endif]-->
+</head>
+
+<body>
+<!--header-->
+<header>
+	<!--top-->
+	[#include "../include/顶栏.html"/]
+	<!--/top-->
+    
+    <!-- top_search -->
+    [#include "../include/搜索栏.html"/]
+    <!-- /top_search -->
+
+	<!-- nav -->
+	[#include "../include/导航栏.html"/]
+    <!-- /nav -->
+</header>
+<!--/header--> 
+
+<!--main-->
+<section class="s b mt5">
+	<ul class="path fl">
+		<li><a href="${base}/">首页</a></li>
+    	[#list channel.nodeList as n]
+    	<li><a href="${n.url}" target="_blank">${n.name}</a></li>
+    	[/#list]
+    	<li class="last">正文</li>
+	</ul>
+</section>
+<section class="s b">
+	<article>
+        <h1 class="w92 mt10">${doc.title!}</h1>
+        <div class="msgbar w92 b">
+            <span class="fl">发布时间：${doc.releaseDate} &nbsp; 来源：[#if doc.originUrl??]<a href="${doc.originUrl}" target="_blank">[/#if]${doc.origin!'本站编辑'}[#if doc.originUrl??]</a>[/#if] &nbsp; 浏览次数：<span id="docviews"></span></span> 
+            <span class="fr all-number-comment"><a href="${base}/comment-${doc.id!}.jsp" target="_blank">${doc.commentCount!}</a></span>
+        </div>
+        <div id="content" class="w92 sLine">
+            <div class="txt h330">${txt!}</div>
+            <div class="pagebar">[@Page pageType='1'/]</div>
+        </div>   
+        <div class="w92 mt10">
+           <h2 class="f14"><strong>相关资讯:</strong></h2>
+            [@DocList tagName=doc.tagStr count='5']
+              <ul class="nlist w98 mt5">
+                [#list list as a]
+                <li><a href="${a.url}" title="${a.title}" target="_blank">[@StrLimit s=a.title l='26'/]</a><em>${a.date?string('yyyy-MM-dd')}</em></li>
+                [/#list]
+              </ul>
+              [/@DocList]
+        </div>
+        [#if doc.commentControl]
+        <div class="w96 mt20 bor">
+           <div class="tit"><h2 class="f14">我要评论</h2><em><a href="${base}/comment-${doc.id!}.jsp" target="_blank">共<span>${doc.commentCount!}</span>条评论，点击查看</a></em></div>
+           <div class="p10 b">
+               <p class="pb5">评论用户：[#if user??]${user.username!?html}[#else]JAVAPMS网友[/#if]</p>
+               <p class="pb5"><textarea name="comcontent" id="comcontent" style="width:630px;height:100px;"></textarea></p>
+               <p><input type="image" value="发布评论" src="/${skin}/img/send.png" class="fr" onclick="commentSubmit(${doc.id});"/><span class="fl">所有评论仅代表网友意见，本站保持中立。</span></p>
+           </div>
+        </div>
+        <script language="javascript">
+		function commentSubmit(id){
+			if($("#comcontent").val()==""){
+				alert("评论内容不能为空！");
+				return;
+			}
+			$.post("${base}/comment.jsp",{
+				docId : id,
+				content : $("#comcontent").val()
+			},function(data){
+				if(data.status==0){
+					alert("评论成功！");
+					$("#comcontent").val("");
+				}else if(data.status==-2){
+					alert("文档不存在！");
+				}else if(data.status==-3){
+					alert("该文档禁止评论！");
+				}else{
+					alert("该文档需登录才可以评论！");
+				}
+			},"json");
+		}
+		</script>
+        [/#if]
+	</article>
+	[#include "../include/侧栏.html"/]
+</section>
+<!--/main-->
+
+<script src="/${skin}/js/com.js"></script>
+<script src="/${skin}/js/jquery.lazyload.mini.js"></script>
+<script language="javascript">
+$(function() {
+	$("#content img").lazyload({threshold:200,effect:"fadeIn"});
+	
+	$.get("${base}/doc/viewCount.jsp",{
+		docId : ${doc.id}
+	},function(data){
+	    $("#docviews").html(data.views);
+	},"json");	
+})
+</script>
+<!--flink-->
+[#include "../include/友情链接栏.html"/]
+<!--flink-->
+<!--footer--> 
+[#include "../include/页脚.html"/] 
+<!--/footer-->
+</body>
+</html>

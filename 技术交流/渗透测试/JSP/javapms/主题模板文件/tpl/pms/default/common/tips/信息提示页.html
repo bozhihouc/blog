@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="javapms"/>
+<meta name="copyright" content="Copyright &copy; 2020 - 2020 All Rights Reserved."/>
+<link rel="shortcut icon" href="/${skin}/img/favicon.ico">
+<script src="${comm}/js/jquery.js"></script>
+<link href="/${skin}/css/style.css" rel="stylesheet"/>
+<!--[if IE]><script src="/${skin}/js/html5.js"></script><![endif]-->
+<script>
+function delayURL(url) {  
+	var delay = parseInt($("#time").html());
+	if(delay > 0) {
+		delay--;
+    	$("#time").html(delay);
+ 	} else {
+    	window.top.location.href = url ;
+ 	}
+    setTimeout("delayURL('" + url + "')", 1000);
+}
+
+$(function() {
+  delayURL('${nextUrl!?html}');
+});
+</script>
+</head>
+
+<body>
+<dl [#if status??&&status==1]class="success"[#else]class="fail"[/#if]>
+  <dt>${msg!}</dt>
+  <dd><span id="time" style="color:red">5</span>后自动跳转到网站首页，或<a href="${base}/" class="red">【点此这里】</a>直接到首页。</dd>
+</dl>
+</body>
+</html>

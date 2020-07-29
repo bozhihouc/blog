@@ -1,0 +1,97 @@
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;会员中心 - ${site.name} - Powered by XXX&lt;/title&gt;
+&lt;meta name=&quot;author&quot; content=&quot;XXX&quot;/&gt;
+&lt;meta name=&quot;copyright&quot; content=&quot;Copyright &copy; 2020 - 2020 All Rights Reserved.&quot;/&gt;
+&lt;link rel=&quot;shortcut icon&quot; href=&quot;/${skin}/img/favicon.ico&quot;&gt;
+&lt;link href=&quot;${base}/plugin/ligerui/ligerUI/skins/Aqua/css/ligerui-all.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+&lt;link href=&quot;/${skin}/css/uc.css&quot; rel=&quot;stylesheet&quot;/&gt;
+&lt;script src=&quot;${comm}/js/jquery.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;!--[if IE]&gt;&lt;script src=&quot;/${skin}/js/html5.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;!-- header --&gt;
+[#include &quot;会员中心页头.html&quot;/]
+&lt;!-- /header --&gt;
+
+&lt;section id=&quot;uc-bg&quot;&gt;
+	&lt;div class=&quot;uc-main&quot;&gt;
+    	[#include &quot;logo.html&quot;/]
+        
+        &lt;div class=&quot;t-mainA b&quot;&gt;
+			[#include &quot;会员左列.html&quot;/]
+ 
+			&lt;div class=&quot;right-side&quot;&gt;
+                    &lt;div class=&quot;nav-tab-tit&quot;&gt;
+                        &lt;div class=&quot;soer&quot;&gt;个人资料管理&lt;/div&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class=&quot;free-tips&quot;&gt;&lt;strong&gt;友情提示：&lt;/strong&gt;&lt;font size=&quot;2&quot;&gt;请尽量保证个人资料完整，邮箱绑定是为了更好地保护您的帐号安全，如果密码丢失，可以通过邮箱找回。&lt;/font&gt;&lt;/div&gt;               
+                    &lt;form method=&quot;post&quot; action=&quot;${base}/member/editInfo.jsp&quot; id=&quot;editinfoForm&quot; enctype=&quot;multipart/form-data&quot;&gt;
+                    &lt;div class=&quot;user-info&quot;&gt;
+                    	&lt;ul class=&quot;form&quot;&gt;
+                            &lt;li&gt;&lt;label class=&quot;lb&quot;&gt;账户名称：&lt;/label&gt;${user.username!}&lt;/li&gt;                    
+                            &lt;li&gt;&lt;label class=&quot;lb&quot;&gt;真实姓名：&lt;/label&gt;&lt;input name=&quot;realName&quot; id=&quot;realName&quot; type=&quot;text&quot; class=&quot;text&quot; size=&quot;30&quot; value=&quot;${user.realName!?html}&quot; maxlength=&quot;25&quot;/&gt;&lt;/li&gt;
+                            &lt;li&gt;
+                            &lt;label class=&quot;lb&quot;&gt;性别：&lt;/label&gt;
+                            &lt;input name=&quot;gender&quot; value=&quot;2&quot; id=&quot;gender&quot; type=&quot;radio&quot; [#if user.member??&amp;&amp;user.member.gender==2]checked=&quot;checked&quot;[/#if]&gt;&lt;label for=&quot;UserSex0&quot;&gt;保密&lt;/label&gt;
+                            &lt;input name=&quot;gender&quot; value=&quot;1&quot; id=&quot;gender&quot; type=&quot;radio&quot; [#if user.member??&amp;&amp;user.member.gender==1]checked=&quot;checked&quot;[/#if]&gt;&lt;label for=&quot;UserSex1&quot;&gt;男&lt;/label&gt;
+                            &lt;input name=&quot;gender&quot; value=&quot;0&quot; id=&quot;gender&quot; type=&quot;radio&quot; [#if user.member??&amp;&amp;user.member.gender==0]checked=&quot;checked&quot;[/#if]&gt;&lt;label for=&quot;UserSex2&quot;&gt;女&lt;/label&gt;
+                            &lt;/li&gt;
+                            &lt;li&gt;&lt;div id=&quot;showid&quot; class=&quot;avatar&quot;&gt;&lt;img [#if user.member??&amp;&amp;user.member.avatar??]src=&quot;${base}${user.member.avatar!}&quot;[#else]src=&quot;/${skin}/img/none.gif&quot;[/#if] width=&quot;110&quot; height=&quot;140&quot; id=&quot;imgId&quot;/&gt;&lt;/div&gt;
+                            &lt;/li&gt;
+                            &lt;li&gt;&lt;label class=&quot;lb&quot;&gt;头像：&lt;/label&gt;&lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;fileField&quot; onchange=&quot;setImagePreview('fileField','imgId','showid')&quot;/&gt;
+                            &lt;/li&gt;
+                    &lt;li&gt;
+                    	&lt;label class=&quot;lb&quot;&gt;生日：&lt;/label&gt;&lt;input name=&quot;birthday&quot; id=&quot;birthday&quot; type=&quot;text&quot; class=&quot;text&quot; size=&quot;30&quot; [#if user.member??]value=&quot;${user.member.birthday!}&quot;[/#if] readonly onclick=&quot;WdatePicker({dateFmt:'yyyy-MM-dd'})&quot;/&gt;
+                    &lt;/li&gt;
+                    &lt;li&gt;&lt;label class=&quot;lb&quot;&gt;手机：&lt;/label&gt;&lt;input name=&quot;mobile&quot; id=&quot;mobile&quot; type=&quot;text&quot; class=&quot;text&quot; size=&quot;30&quot; value=&quot;${user.mobile!?html}&quot; maxlength=&quot;20&quot; vld=&quot;{digits:true,messages:{digits:'手机号码必须为数字!'}}&quot;/&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;label class=&quot;lb&quot;&gt;电话：&lt;/label&gt;&lt;input name=&quot;phone&quot; id=&quot;phone&quot; type=&quot;text&quot; class=&quot;text&quot; size=&quot;30&quot; value=&quot;${user.phone!?html}&quot; maxlength=&quot;20&quot; vld=&quot;{digits:true,messages:{digits:'电话号码必须为数字!'}}&quot;/&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;label class=&quot;lb&quot;&gt;电子邮箱：&lt;/label&gt;&lt;input name=&quot;email&quot; type=&quot;text&quot; id=&quot;email&quot; class=&quot;text&quot; size=&quot;30&quot; maxlength=&quot;30&quot; value=&quot;${user.email!?html}&quot; vld=&quot;{email:true,messages:{email:'邮箱格式错误!'}}&quot;/&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;label class=&quot;lb&quot;&gt;所在地址：&lt;/label&gt;&lt;input name=&quot;address&quot; id=&quot;address&quot; type=&quot;text&quot; class=&quot;text&quot; size=&quot;30&quot; [#if user.member??]value=&quot;${user.member.address!}&quot;[/#if] maxlength=&quot;50&quot;/&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;label class=&quot;lb&quot;&gt;个性说明：&lt;/label&gt;&lt;textarea rows=&quot;5&quot; cols=&quot;70&quot; name=&quot;signature&quot; class=&quot;input3&quot;&gt;[#if user.member??]${user.member.signature!}[/#if]&lt;/textarea&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+                    	&lt;div class=&quot;next&quot;&gt;
+                        	&lt;input name=&quot;id&quot; type=&quot;hidden&quot; value=&quot;${user.id}&quot;/&gt;
+                            &lt;button type=&quot;submit&quot; class=&quot;btn btn_submit&quot;&gt;提 交&lt;/button&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;/form&gt;
+                &lt;/div&gt;
+		&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!--footer--&gt;    
+[#include &quot;会员中心页脚.html&quot;/]
+&lt;!--/footer--&gt;
+
+&lt;script src=&quot;${comm}/js/comm.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;${base}/plugin/ligerui/ligerUI/js/core/base.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;${base}/plugin/ligerui/ligerUI/js/plugins/ligerDialog.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;${base}/plugin/ligerui/ligerUI/js/plugins/ligerTip.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;${base}/plugin/My97DatePicker/WdatePicker.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    $(function () {
+		$(&quot;#umenu_12&quot;).addClass(&quot;on&quot;);       
+        
+        $(&quot;#editinfoForm&quot;).validate({
+    		errorPlacement : function(lable, element) {
+    			$(element).ligerHideTip();
+                $(element).ligerTip({content:lable.html()});
+    		},
+    		success : function(lable,element) {
+    			$(element).ligerHideTip();
+    		}
+    	});
+    	
+    	[#if msg??]
+    	$.ligerDialog.success('${msg}');
+    	[/#if]
+    })
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;

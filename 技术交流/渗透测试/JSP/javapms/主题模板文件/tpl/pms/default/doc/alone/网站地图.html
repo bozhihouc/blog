@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${channel.title!channel.name} - ${site.name} - Powered by XXX</title>
+<meta http-equiv="keywords" content="${channel.keywords!}"/>
+<meta http-equiv="description" content="${channel.description!}"/>
+<meta name="author" content="javapms"/>
+<meta name="copyright" content="Copyright &copy; 2020 - 2020 All Rights Reserved."/>
+<link rel="shortcut icon" href="/${skin}/img/favicon.ico">
+<link href="/${skin}/css/style.css" rel="stylesheet"/>
+<script src="${comm}/js/jquery.js"></script>
+<!--[if IE]><script src="/${skin}/js/html5.js"></script><![endif]-->
+</head>
+
+<body>
+<!--header-->
+<header>
+	<!--top-->
+	[#include "../include/顶栏.html"/]
+	<!--/top-->
+    
+    <!-- top_search -->
+    [#include "../include/搜索栏.html"/]
+    <!-- /top_search -->
+
+	<!-- nav -->
+	[#include "../include/导航栏.html"/]
+    <!-- /nav -->
+</header>
+<!--/header--> 
+
+<!--main-->
+<section class="s b mt5">
+	<ul class="path fl">
+    	<li><a href="${base}/">首页</a></li>
+		<li class="last">网站导航</li>
+	</ul>
+</section>
+<!--/path-->
+
+<!--main-->
+<section class="s bor pb10">
+	[@ChannelList]
+	<ul class="pms-guide">
+	[#list list as c]
+		<li><strong><a href="${c.url}" title="${c.name}">${c.name}</a></strong>
+		[@ChannelList pId=c.id]
+		[#list list as c]
+		<a href="${c.url}" target="_blank" title="${c.name}">${c.name}</a>
+		[/#list]
+		[/@ChannelList]
+		</li>
+	[/#list]
+	</ul>
+	[/@ChannelList]
+</section>
+<!--/main-->
+
+<!--flink-->
+[#include "../include/友情链接栏.html"/]
+<!--flink-->
+<!--footer--> 
+[#include "../include/页脚.html"/] 
+<!--/footer-->
+
+<script src="/${skin}/js/com.js"></script>
+</body>
+</html>

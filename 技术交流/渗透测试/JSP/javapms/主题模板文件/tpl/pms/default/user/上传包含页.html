@@ -1,0 +1,405 @@
+<script type="text/javascript">
+var swfu;
+var swfu1;
+var swfu2;
+window.onload=function() {
+	var uploadUrl = "o_upload_img.do";
+	var uploadUrl1 = "o_upload_attach.do";
+	var jsessionid = $.cookie("JSESSIONID");
+	swfu=new SWFUpload({
+		upload_url : uploadUrl,
+		flash_url : "${base}/plugin/swfupload/swfupload.swf",
+		post_params : {"jsessionid":jsessionid},
+		file_size_limit : "10 MB",
+		file_types : "*.jpg;*.gif;*.png;*.bmp",
+		file_post_name:"imgFile",
+		file_types_description : "图片",
+		file_queue_limit : 0,
+		custom_settings : {
+			progressTarget : "fsUploadProgress",
+			cancelButtonId : "btnCancel"
+		},
+		debug: false,
+		
+		button_image_url : "${base}/plugin/swfupload/swfbtn.png",
+		button_placeholder_id : "spanButtonPlaceHolder",
+		button_text: "<span class='abtn'>上传图片</span>",
+		button_window_mode:"transparent",
+		button_width: 80,
+		button_height: 24,
+		button_text_left_padding: 22,
+		button_text_top_padding: 2,
+		
+		file_queued_handler : fileQueued2,
+		file_queue_error_handler : fileQueueError,
+		file_dialog_complete_handler : fileDialogComplete,
+		upload_start_handler : uploadStart2,
+		upload_progress_handler : uploadProgress2,
+		upload_error_handler : uploadError,
+		upload_success_handler : uploadSuccess2,
+		upload_complete_handler : uploadComplete2,
+		queue_complete_handler : queueComplete2
+	});
+	swfu1=new SWFUpload({
+		upload_url : uploadUrl1,
+		flash_url : "${base}/plugin/swfupload/swfupload.swf",
+		post_params : {"jsessionid":jsessionid},
+		file_size_limit : "100 MB",
+		file_types : "*.doc;*.rar;*.zip;*.xls;*.jpg;*.docx;*.pdf;",
+		file_post_name:"attachFile",
+		file_types_description : "附件",
+		file_queue_limit : 0,
+		custom_settings : {
+			progressTarget : "fsUploadProgress",
+			cancelButtonId : "btnCancel"
+		},
+		debug: false,
+		
+		button_image_url : "${base}/plugin/swfupload/swfbtn.png",
+		button_placeholder_id : "spanButtonPlaceHolder1",
+		button_text: "<span class='abtn'>上传附件</span>",
+		button_window_mode:"transparent",
+		button_width: 80,
+		button_height: 24,
+		button_text_left_padding: 22,
+		button_text_top_padding: 2,
+		
+		
+		file_queued_handler : fileQueued1,
+		file_queue_error_handler : fileQueueError,
+		file_dialog_complete_handler : fileDialogComplete,
+		upload_start_handler : uploadStart1,
+		upload_progress_handler : uploadProgress1,
+		upload_error_handler : uploadError,
+		upload_success_handler : uploadSuccess1,
+		upload_complete_handler : uploadComplete1,
+		queue_complete_handler : queueComplete2
+	});
+	swfu2=new SWFUpload({
+		upload_url : uploadUrl,
+		flash_url : "${base}/plugin/swfupload/swfupload.swf",
+		file_size_limit : "10 MB",
+		file_types : "*.jpg;*.gif;*.png;*.bmp",
+		file_post_name:"imgFile",
+		file_types_description : "图片",
+		file_queue_limit : 0,
+		custom_settings : {
+			progressTarget : "fsUploadProgress",
+			cancelButtonId : "btnCancel"
+		},
+		debug: false,
+		
+		button_image_url : "${base}/plugin/swfupload/swfbtn.png",
+		button_placeholder_id : "spanButtonPlaceHolder2",
+		button_text: "<span class='abtn'>上传图片</span>",
+		button_window_mode:"transparent",
+		button_width: 80,
+		button_height: 24,
+		button_text_left_padding: 22,
+		button_text_top_padding: 2,
+		
+		file_queued_handler : fileQueued2,
+		file_queue_error_handler : fileQueueError,
+		file_dialog_complete_handler : fileDialogComplete,
+		upload_start_handler : uploadStart3,
+		upload_progress_handler : uploadProgress3,
+		upload_error_handler : uploadError,
+		upload_success_handler : uploadSuccess3,
+		upload_complete_handler : uploadComplete2,
+		queue_complete_handler : queueComplete2
+	});
+};
+[#if article??&&article.pics??]
+var imgIndex = 0;
+var imgIndex1 = 0;
+[#list article.pics as p]
+[#if p.thumb??&&p.thumb]
+imgIndex1++;
+[#else]
+imgIndex++;
+[/#if]
+[/#list]
+[#else]
+var imgIndex = 0;
+var imgIndex1 = 0;
+[/#if]
+[#if article??&&article.atts??]
+var attIndex = ${article.atts?size};
+[#else]
+var attIndex = 0;
+[/#if]
+
+function fileQueued2(file) {
+	
+}
+function uploadStart2(file) {
+	$("#imgshow").append($.format($("#imgList").html(),imgIndex++));
+}
+function uploadProgress2(file, bytesLoaded, bytesTotal) {
+	var percent = Math.ceil((bytesLoaded / bytesTotal) * 100);
+	var index = imgIndex - 1;
+	var p = "width:"+percent+"%;";
+	$("#imgpercent"+index).attr("style",p);
+	$("#imgpercent"+index).html(percent+"%");
+}
+function uploadComplete2(file) {
+	
+}
+function queueComplete2(file) {
+	
+}
+function uploadSuccess2(file,serverData) {
+	var index = imgIndex - 1;
+	$("#img"+index).attr("src","${base}"+serverData);
+	$("#img"+index).autoZoomLoadImage(150, 150);
+	$("#imgpath"+index).val(serverData);
+	$("#imgdel"+index).bind("click",function(){
+		$.get("o_delete_file.do",{"path":$("#img"+index).attr("src")});
+		$("#imgList"+index).remove();
+	});
+	$("#imgprocess"+index).remove();
+}
+
+function uploadStart3(file) {
+	$("#aimgshow").append($.format($("#aimgList").html(),imgIndex1++));
+}
+
+function uploadProgress3(file, bytesLoaded, bytesTotal) {
+	var percent = Math.ceil((bytesLoaded / bytesTotal) * 100);
+	var index = imgIndex1 - 1;
+	var p = "width:"+percent+"%;";
+	$("#aimgpercent"+index).attr("style",p);
+	$("#aimgpercent"+index).html(percent+"%");
+}
+
+function uploadSuccess3(file,serverData) {
+	var index = imgIndex1 - 1;
+	if(index==0){
+		$("#typevalue0").val(",0,");
+		$("#seltype00").attr("checked",true);
+	}
+	$("#aimg"+index).attr("src","${base}"+serverData);
+	$("#aimg"+index).autoZoomLoadImage(150, 150);
+	$("#aimgpath"+index).val(serverData);
+	$("#aimgdel"+index).bind("click",function(){
+		$.get("o_delete_file.do",{"path":$("#aimg"+index).attr("src")});
+		$("#aimgList"+index).remove();
+	});
+	$("#aimgprocess"+index).remove();
+}
+
+
+function fileQueued1(file) {
+	
+}
+function uploadStart1(file) {
+	$("#attshow").append($.format($("#attList").html(),attIndex++));
+	var index = attIndex - 1;
+	var size = (file.size/1024).toFixed(2);
+	$("#attname"+index).html(file.name+"("+size+"KB)");
+}
+function uploadProgress1(file, bytesLoaded, bytesTotal) {
+	var percent = Math.ceil((bytesLoaded / bytesTotal) * 100);
+	var index = attIndex - 1;
+	$("#attpb"+index).progressBar(percent,{ barImage: '${base}/plugin/swfupload/progressbg_green.gif'});
+}
+function uploadComplete1(file) {
+	
+}
+function uploadSuccess1(file,serverData) {
+	var index = attIndex - 1;
+	$("#atturl"+index).val(serverData);
+	$("#attachname"+index).val(file.name);
+	$("#attdel"+index).bind("click",function(){
+		$.get("o_delete_file.do",{"path":$("#atturl"+index).val()});
+		$("#att"+index).remove();
+	});
+}
+
+
+function delimg(index){
+	$("#imgList"+index).remove();
+}
+function delimg1(index){
+	$("#aimgList"+index).remove();
+}
+function delatt(index){
+	$("#att"+index).remove();
+}
+
+var dig;
+
+function setChannel(name,id) {
+	$("#menuContent").fadeOut("fast");
+	$("#selectchannelId").val(name);
+	$("#channelId").val(id);
+	$("#childsize").val(0);
+	$("#selectchannelId").focus();
+}
+
+function titleTag() {
+	$.post("v_titletags.do", {
+		"title" : $("#title").val()
+	}, function(data) {
+		if(data.success) {
+			$("#tagStr").val(data.tag);
+		}
+	}, "json");
+}
+
+function checktype(typeid){
+	if($("#type"+typeid).attr("checked")){
+		$("li[id^='typeshow"+typeid+"']").show();
+	}else{
+		$("li[id^='typeshow"+typeid+"']").hide();
+	}
+}
+
+function selecttype(checkbox,typeid){
+	var m = "seltype"+typeid;
+	var s = ","+$(checkbox).val()+",";
+	var l = s.length;
+	var str = checkbox.id.substring(m.length);
+	if($(checkbox).attr("checked")){
+		$("input[id^='seltype"+typeid+"']").attr("checked",false);
+		$("input[id^='typevalue']").each(function(i){
+			var i = $(this).val().indexOf(s);
+			if(i>-1){
+			    $(this).val($(this).val().substring(0,i+1)+$(this).val().substring(i+l));
+			}
+		});
+		$(checkbox).attr("checked",true);
+		$("#typevalue"+str).val($("#typevalue"+str).val()+$(checkbox).val()+",");
+	}else{
+		var i = $("#typevalue"+str).val().indexOf(s);
+		$("#typevalue"+str).val($("#typevalue"+str).val().substring(0,i+1)+$("#typevalue"+str).val().substring(i+l));
+	}
+}
+
+function selectfengmian(checkbox,typeid){
+	var m = "selfengm"+typeid;
+	var s = ","+$(checkbox).val()+",";
+	var l = s.length;
+	var str = checkbox.id.substring(m.length);
+	if($(checkbox).attr("checked")){
+		$("input[id^='selfengm"+typeid+"']").attr("checked",false);
+		$("input[id^='itypevalue']").each(function(i){
+			var i = $(this).val().indexOf(s);
+			if(i>-1){
+			    $(this).val($(this).val().substring(0,i+1)+$(this).val().substring(i+l));
+			}
+		});
+		$(checkbox).attr("checked",true);
+		$("#itypevalue"+str).val($("#itypevalue"+str).val()+$(checkbox).val()+",");
+	}else{
+		var i = $("#itypevalue"+str).val().indexOf(s);
+		$("#itypevalue"+str).val($("#itypevalue"+str).val().substring(0,i+1)+$("#itypevalue"+str).val().substring(i+l));
+	}
+}
+
+function changeprev(index){
+	var txt = $("#imgList"+index).clone();
+	var prev = $("#imgList"+index).prev();
+	if(prev.attr("id")){
+		$("#imgList"+index).remove();
+		prev.before(txt);
+	}
+}
+
+function changenext(index){
+	var txt = $("#imgList"+index).clone();
+	var next = $("#imgList"+index).next();
+	if(next.attr("id")){
+		$("#imgList"+index).remove();
+		next.after(txt);
+	}
+}
+
+$.validator.addMethod("checkchannel", function(value, element, params) {
+	if (value != "") {
+		if($("#childsize").val()!=0){
+			return false;
+		}
+		return true;
+	}
+}, "请选择末级栏目添加文档!");
+</script>
+    <ul id="attList" style="display:none">
+	   <li id="att{0}"><span id="attname{0}"></span>
+		   <a href="javascript:void(0);" id="attdel{0}" onclick="swfu1.cancelQueue();" title="删除">
+		   <img src="${base}/skin/sys/img/admin/del.gif"/></a>
+		   <span class="progressBar" id="attpb{0}"></span>
+		   <input type="hidden" name="attNames" id="attachname{0}"/>
+		   <input type="hidden" name="attPaths" id="atturl{0}"/>
+	   </li>
+	</ul>
+	
+	<div id="imgList" style="display:none">
+    <dl id="imgList{0}" class="atlas">
+		<dt>
+		<div class="ver_pic">
+		<div class="subpic"><img id="img{0}" src="${base}/skin/sys/img/admin/uploading.gif"/></div>
+		<div class="process" id="imgprocess{0}"><div class="percent" id="imgpercent{0}" style="width:0%;"></div></div>
+		</div>
+		<input type="hidden" name="imgPaths" id="imgpath{0}"/></dt>
+		<dd class="ctrl">
+			<a href="javascript:void(0);" id="imgprev{0}" onclick="changeprev({0})" title="排前"><img src="${base}/skin/sys/img/admin/front.gif"/></a>
+			<a href="javascript:void(0);" id="imgnext{0}" onclick="changenext({0})" title="排后"><img src="${base}/skin/sys/img/admin/back.gif"/></a>
+			<a href="javascript:void(0);" id="imgdel{0}" onclick="swfu.cancelQueue();" title="删除"><img src="${base}/skin/sys/img/admin/del.gif"/></a>
+		</dd>
+		<dd class="prop">
+		    <input type="hidden" name="imgStyles" value="," id="itypevalue{0}"/>
+		    <input type="hidden" name="thumbs" value="0"/>
+		    <ul class="items">
+			   <li class="t2"><input type="checkbox" value="1" id="selfengm0{0}" onclick="selectfengmian(this,0);"/>封面</li>
+	        </ul>
+		</dd>
+		<dd class="desc"><textarea name="imgDescs" id="desc{0}" maxlength="255" class="l-textarea" style="width:380px; height:120px;"></textarea></dd>
+	</dl>
+    </div>
+    <div id="aimgList" style="display:none">
+    <dl id="aimgList{0}" class="thumbnail">
+		<dt><div class="ver_pic"><div class="subpic"><img id="aimg{0}" src="${base}/skin/sys/img/admin/uploading.gif"/></div>
+		<div class="process" id="aimgprocess{0}"><div class="percent" id="aimgpercent{0}" style="width:0%;"></div></div>
+		</div><input type="hidden" name="imgPaths" id="aimgpath{0}"/></dt>
+		<dd class="ctrl">
+			<a href="javascript:void(0);" title="修改"><img src="${base}/skin/sys/img/admin/update.gif"/></a>
+			<a href="javascript:void(0);" id="aimgdel{0}" onclick="swfu2.cancelQueue();" title="删除"><img src="${base}/skin/sys/img/admin/del.gif"/></a>
+		</dd>
+		<dd class="prop">
+		    <input type="hidden" name="imgStyles" value="," id="typevalue{0}"/>
+		    <input type="hidden" name="thumbs" value="1"/>
+		    <ul class="items">
+		       <li class="t2" id="typeshow0{0}">
+			   <input type="checkbox" id="seltype0{0}" value="0" onclick="selecttype(this,0);"/>标题图</li>
+		       [#list typeList as type]
+		       [#if type.hasImage]
+			   <li class="t2" id="typeshow${type.id}{0}" [#if article??&&article.style??&&article.style?contains(type.id+"")][#else]style="display:none"[/#if]>
+			   <input type="checkbox" id="seltype${type.id!}{0}" value="${type.id!}" onclick="selecttype(this,${type.id!});"/>${type.name!}</li>
+			   [/#if]
+	           [/#list]
+	        </ul>
+		</dd>
+		<dd class="desc" style="display:none"><textarea name="imgDescs" id="adesc{0}" maxlength="255" class="l-textarea" style="width:380px; height:60px;"></textarea></dd>
+	</dl>
+    </div>
+    <span style="display:none">
+      [#if !u]<span id="spanButtonPlaceHolder"></span>[/#if]
+      [#if !u1]<span id="spanButtonPlaceHolder1"></span>[/#if]
+      [#if !u2]<span id="spanButtonPlaceHolder2"></span>[/#if]
+    </span>
+    <span style="display:none"><input id="btnCancel" type="button" value="取消" onclick="swfu.cancelQueue();" disabled="disabled" /></span>
+	
+	<div id="target" style="margin:3px; display:none;">
+	    <div style="width: 300px; height: 400px; margin: 10px; margin-right: 1px; float: left;
+            border: 1px solid #ccc; overflow: auto;">
+            <ul id="dirList" class="ztree">
+            </ul>
+        </div>
+        <div style="width: 300px; height: 400px; margin: 10px; margin-left: 1px; float: left;
+            border: 1px solid #ccc; overflow: auto;">
+            <ul id="tplList" class="ztree">
+            </ul>
+        </div>
+        <input type="hidden" id="tplid" />
+	</div>

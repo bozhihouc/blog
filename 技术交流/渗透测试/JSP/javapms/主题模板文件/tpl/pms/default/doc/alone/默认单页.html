@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${channel.title!channel.name} - ${site.name} - Powered by XXX</title>
+<meta http-equiv="keywords" content="${channel.keywords!}"/>
+<meta http-equiv="description" content="${channel.description!}"/>
+<meta name="author" content="javapms"/>
+<meta name="copyright" content="Copyright &copy; 2020 - 2020 All Rights Reserved."/>
+<link rel="shortcut icon" href="/${skin}/img/favicon.ico">
+<link href="/${skin}/css/style.css" rel="stylesheet"/>
+<script src="${comm}/js/jquery.js"></script>
+<!--[if IE]><script src="/${skin}/js/html5.js"></script><![endif]-->
+</head>
+
+<body>
+<!--header-->
+<header>
+	<!--top-->
+	[#include "../include/顶栏.html"/]
+	<!--/top-->
+    
+    <!-- top_search -->
+    [#include "../include/搜索栏.html"/]
+    <!-- /top_search -->
+
+	<!-- nav -->
+	[#include "../include/导航栏.html"/]
+    <!-- /nav -->
+</header>
+<!--/header--> 
+
+<!--main-->
+<section class="s mt5">
+	<ul class="path">
+    	<li><a href="${base}/">首页</a></li>
+		[#list channel.nodeList as n]
+		<li[#if !n_has_next] class="last"[/#if]><a href="${n.url}" target="_blank">${n.name}</a></li>
+		[/#list]
+	</ul>
+</section>
+<section class="s b">
+	<article>
+        <h1 class="w92 mt10">${channel.title!channel.name}</h1>
+		<div id="content" class="w92">
+            <div class="txt h_txt">${channel.txtValue!}</div>
+        </div>
+	</article>
+	[#include "../include/侧栏.html"/]
+</section>
+<!--/main-->
+
+<!--flink-->
+[#include "../include/友情链接栏.html"/]
+<!--flink-->
+<!--footer--> 
+[#include "../include/页脚.html"/] 
+<!--/footer-->
+<script src="/${skin}/js/com.js"></script>
+<script src="/${skin}/js/jquery.lazyload.mini.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+[#if bean??&&bean.slot??]
+
+[#if bean.slot.slotType==1]
+<!-- 固定位置 -->
+<div class="ad-${bean.id}">
+    <a href="${bean.url!}" target="_blank" title="${bean.aexplain!}"><img src="${base}${bean.attrUrl!}" width="${bean.slot.width!}" height="${bean.slot.height!}" alt="${bean.aexplain!}"/></a>
+</div>
+
+[#elseif bean.slot.slotType==2]
+<!-- 漂浮广告 -->
+<div id="pfad-${bean.id}" class="pfad-${bean.id}" style="position:absolute">
+        <a href="${bean.url!}" title="${bean.aexplain!}" target="_blank"><img src="${base}${bean.attrUrl!}" width="${bean.slot.width!}" height="${bean.slot.height!}" alt="${bean.aexplain!}"/></a>
+        <div onClick="hidead${bean.id}();" style="font-size:12px;cursor:pointer;" align="right">关闭×</div>
+</div>
+<script type="text/javascript">
+	var ad1=new AdMove("pfad-${bean.id}");
+	ad1.Run();
+	function hidead${bean.id}()
+	{document.getElementById("pfad-${bean.id}").style.display="none";}
+</script>
+
+[#elseif bean.slot.slotType==3]
+<!-- 弹窗广告 -->
+<script src="${base}/plugin/artdialog/artDialog.js?skin=chrome"></script>
+<script language="javascript">
+var intDiff = parseInt(482400);//倒计时总秒数量26日10点
+
+function timer(intDiff){
+	window.setInterval(function(){
+	var day=0,
+		hour=0,
+		minute=0,
+		second=0;//时间默认值		
+	if(intDiff > 0){
+		day = Math.floor(intDiff / (60 * 60 * 24));
+		hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+		minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+		second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+	}
+	if (minute <= 9) minute = '0' + minute;
+	if (second <= 9) second = '0' + second;
+	$('#day_show').html(day+"天");
+	$('#hour_show').html('<s id="h"></s>'+hour+'时');
+	$('#minute_show').html('<s></s>'+minute+'分');
+	$('#second_show').html('<s></s>'+second+'秒');
+	intDiff--;
+	}, 1000);
+}
+
+$(function() {
+	timer(intDiff);
+	art.dialog({
+		id: 'msg',
+		title: '网站公告',
+		content: document.getElementById("adwin"),
+		width: ${bean.slot.width!'300'},
+		left: '50%',
+		top: '30%',
+        padding: '10px 10px',
+		fixed: true,
+		drag: false,
+		lock: true,
+		resize: false
+	})
+})
+</script>
+<style type="text/css">
+.time-item strong {background:#C71C60;color:#fff;line-height:49px;font-size:36px;font-family:Arial;padding:0 10px;	margin-right:10px;border-radius:5px;box-shadow:1px 1px 3px rgba(0,0,0,0.2);}
+</style>
+<div id="adwin" class="off ad-txt ad-${bean.id}">
+    <h2>距新版系统正式上线倒计时</h2>
+	<div class="time-item">
+		<strong id="day_show">0天</strong>
+		<strong id="hour_show">0时</strong>
+		<strong id="minute_show">0分</strong>
+		<strong id="second_show">0秒</strong>
+	</div>
+    <p>${bean.aexplain!}</p>
+</div>
+
+[#else]
+<!-- 对联广告 -->
+<div id="leftDiv" style="position:absolute;top:60px;left:2%">
+	<div><a href="${bean.url!}" target="_blank" title="${bean.aexplain!}"><img src="${base}${bean.attrUrl!}" alt="${bean.aexplain!}"/></a></div>
+	<span style="font-size:12px;color:red;cursor:pointer;" onclick="close_duilian()">关闭×</span>
+</div>
+<div id="rightDiv" style="position:absolute;top:60px;right:2%;">
+	<div><a href="${bean.url!}" target="_blank" title="${bean.aexplain!}"><img src="${base}${bean.attrUrl!}" alt="${bean.aexplain!}"/></a></div>
+	<span style="font-size:12px;color:red;cursor:pointer;text-align:right;" onclick="close_duilian()">关闭×</span>
+</div>
+<script type="text/javascript">
+<!-- 
+lastScrollY = 0;
+function heartBeat(){ 
+var diffY;
+if (document.documentElement && document.documentElement.scrollTop)
+ diffY = document.documentElement.scrollTop;
+else if (document.body)
+ diffY = document.body.scrollTop
+else
+    {/*Netscape stuff*/}
+ 
+percent=.1*(diffY-lastScrollY); 
+if(percent>0)percent=Math.ceil(percent); 
+else percent=Math.floor(percent); 
+document.getElementById("leftDiv").style.top = parseInt(document.getElementById("leftDiv").style.top)+percent+"px";
+document.getElementById("rightDiv").style.top = parseInt(document.getElementById("leftDiv").style.top)+percent+"px";
+lastScrollY=lastScrollY+percent; 
+}
+
+//下面这段删除后，对联将不跟随屏幕而移动。
+window.setInterval("heartBeat()",20);
+function close_duilian(){
+  var l=document.getElementById("leftDiv");
+  var r=document.getElementById("rightDiv");
+   l.style.display="none";
+   r.style.display="none";
+}
+//-->
+</script>
+[/#if]
+
+[/#if]

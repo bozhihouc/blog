@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${question.name!} - ${site.name} - Powered by XXX</title>
+<meta http-equiv="keywords" content="${question.name!}"/>
+<meta http-equiv="description" content="${question.name!}"/>
+<meta name="author" content="javapms"/>
+<meta name="copyright" content="Copyright &copy; 2020 - 2020 All Rights Reserved."/>
+<link rel="shortcut icon" href="/${skin}/img/favicon.ico">
+<link href="/${skin}/css/style.css" rel="stylesheet"/>
+<script src="${comm}/js/jquery.js"></script>
+<!--[if IE]><script src="/${skin}/js/html5.js"></script><![endif]-->
+</head>
+
+<body>
+<!--header-->
+<header>
+	<!--top-->
+	[#include "../../doc/include/顶栏.html"/]
+	<!--/top-->
+    
+    <!-- top_search -->
+    [#include "../../doc/include/搜索栏.html"/]
+    <!-- /top_search -->
+
+	<!-- nav -->
+	[#include "../../doc/include/导航栏.html"/]
+    <!-- /nav -->
+</header>
+<!--/header--> 
+
+<!--main-->
+<section class="s mt5">
+	<ul class="path">
+        <li><a href="${base}/">首页</a></li>
+        <li><a href="${base}/questionList.jsp" target="_blank">问卷调查</a></li>
+        <li class="last">${question.name!?html}详情</li>
+	</ul>
+</section>
+<section class="s b">
+	<article>
+        <h1 class="w92 mt10">${question.name!?html}</h1>
+        <div class="msgbar w92">
+            发布时间：：${question.createTime?string("yyyy-MM-dd HH:mm:ss")} &nbsp; 来源：本站编辑 &nbsp; 参与人数：[@QuestionCount qId=question.id]${count!}[/@QuestionCount]人
+        </div>
+        <div class="w92">
+			<div class="desc"> 
+				${question.description!?html}
+			</div>
+            <form name="survey" id="surveyForm" action="${base}/questionSubmit.jsp" method="post" onsubmit="return checksel();">    
+			<dl class="survey mt10">
+			    [@SurveyTheme qId=qId count='10' custom='1']
+			    [#list page.content as theme]
+			    <a name="md${theme.id}" id="md${theme.id}"></a>
+				<dt>Q${theme_index+1}、${theme.title!?html}<span>*</span></dt>
+				[#if theme.surveyType==NORMAL]
+                <dd>
+                	<ul>
+                	   [#if theme.showType==SELECTED]
+                	   <li>
+                           <select name="theme${theme.id}">
+                           [#list theme.items as item]
+                           <option value="${item.name!?html}">${item.name!?html}</option>
+                           [/#list]
+                           </select>
+					   </li>
+                	   [#else]
+                	   [#if theme.totalCount gt 1]
+                	   [#list theme.items as item]
+						<li>
+                            <input name="thlist${theme.id}" id="q1_1" type="checkbox" value="${item.name!?html}">
+                            <label for="q1_1">${item.name!?html}</label>
+						</li>
+						[/#list]
+                        [#else]
+                        [#list theme.items as item]
+                        <li>
+                            <input name="theme${theme.id}" id="q1_1" type="radio" value="${item.name!?html}">
+                            <label for="q1_1">${item.name!?html}</label>
+						</li>
+						[/#list]
+                        [/#if]
+                        [/#if]
+                	</ul>
+                </dd>
+                [#else]
+                <dd>
+                	<ul>
+                	[#if theme.showType==TEXT]
+                	<input type="text" name="theme${theme.id}" id="theme${theme.id}" maxlength="${theme.maxlength!}"/>
+                	[#elseif theme.showType==ONLINE]
+                	<input type="text" name="theme${theme.id}" id="theme${theme.id}" maxlength="${theme.maxlength!}"/>
+                	[#else]
+                	<textarea name="theme${theme.id}" id="theme${theme.id}" cols="70" rows="5" class="inputtext" id="q3" value="" maxlength="${theme.maxlength!}"></textarea>
+                	[/#if]
+                	</ul>
+                </dd>
+                [/#if]
+                [/#list]
+                [/@SurveyTheme]
+			</dl>
+            <div class="mt10">
+                <input type="hidden" name="qId" value="${qId}"/>
+                <input type="submit" name="btnSubmit" id="btnSubmit" class="queren_but" value="提交问卷" onMouseMove="this.className='queren_butx'" onMouseOut="this.className='queren_but'" />
+            </div>
+            </form>
+        </div>
+	</article>
+	<aside>
+    <div class="bor">
+		<div class="tit"><h2>要闻推荐</h2></div>
+		<div class="cont">
+            [@DocList count='5' orderBy='3']
+            <ul class="ttList sLine w96 pb5">
+                [#if list?size gt 0]
+                [#assign a=list[0]]
+                <li class="tt2"><a href="${a.url}" title="${a.title}" target="_blank">[@StrLimit s=a.title l='18'/]</a></li>        
+                <li>
+                [#list list as a]
+                [#if a_index gt 0]
+                <a href="${a.url}" title="${a.title}" target="_blank">[[@StrLimit s=a.title l='10'/]]</a> [/#if][#if a_index==2]<br/>[/#if]
+                [/#list]
+                </li>
+                [/#if]
+            </ul>
+            [/@DocList]
+            [@DocList count='6']
+            <ul class="nlist2 w92 mt5 pb5">
+                [#list list as a]
+                <li><a href="${a.url}" title="${a.title}" target="_blank">[@StrLimit s=a.title l='20'/]</a></li>
+                [/#list]
+            </ul>
+            [/@DocList]      
+		</div>
+    </div>
+    <div class="bor mt5">
+        <div class="tit"><h2>热点排行</h2></div>
+        <div class="cont">
+            [@DocList count='10' orderBy='4']
+             <ol class="ph2 w92 mt5 mb5">
+                [#list list as a]
+                <li><a href="${a.url}" title="${a.title}" target="_blank">[@StrLimit s=a.title l='20'/]</a></li>
+                [/#list]
+             </ol>
+             [/@DocList]
+        </div>
+    </div>
+    <div class="bor mt5">
+		<div class="tit"><h2>最新视点</h2></div>
+		<div class="cont">         
+            [@DocList mId='4' count='7' orderBy='2']
+            [#if list?size gt 0]
+            [#assign a=list[0]]
+            <div class="twlist w92 mt10 pb5">
+				<a href="${a.url}" title="${a.title}" target="_blank" class="video"><img src="${base}${a.getPicStyle('0')!}"/><i></i></a>
+				<div class="in_text">
+					<h2><a href="${a.url}" title="${a.title}" target="_blank">[@StrLimit s=a.title l='20'/]</a></h2>
+					<p>[@StrLimit s=a.description l='22'/]<a href="${a.url}" target="_blank" class="blue">[详情]</a></p>
+				</div>
+            </div>
+            <ul class="nlist2 w92">
+               [#list list as a]
+               [#if a_index gt 0]
+                <li class="m4"><a href="${a.url}" title="${a.title}" target="_blank">[@StrLimit s=a.title l='15' append=append/]</a></li>
+               [/#if]
+               [/#list]
+            </ul>
+            [/#if]
+            [/@DocList]
+        </div>      
+    </div>
+	</aside>
+</section>
+<!--/main-->
+
+<script src="/${skin}/js/com.js"></script>
+<script src="/${skin}/js/jquery.lazyload.mini.js"></script>
+<script language="javascript">
+$(function() {
+	$("#content img").lazyload({threshold:200,effect:"fadeIn"});
+
+    [#if msg??]
+    alert('${msg}');
+	[/#if]
+});
+
+function checksel(){
+	[@SurveyTheme qId=qId count='10' custom='1']
+	[#list page.content as theme]
+	[#if theme.surveyType==NORMAL]
+	[#if theme.showType==CHECKED]
+	[#if theme.totalCount gt 1]
+	var c = 0;
+	$("input[name='thlist${theme.id}']:checked").each(function(i){
+		c++;
+	});
+	if(c==0){
+		alert("至少选择一个选项!");
+		$("html,body").animate({scrollTop:$("#md${theme.id}").offset().top-80},1000);
+		return false;
+	}
+	if(c>${theme.totalCount}){
+		alert("最多只能选择"+${theme.totalCount}+"项!");
+		$("html,body").animate({scrollTop:$("#md${theme.id}").offset().top-80},1000);
+		return false;
+	}
+	[#else]
+	var c = 0;
+	$("input[name='theme${theme.id}']:checked").each(function(i){
+		c++;
+	});
+	if(c==0){
+		alert("至少选择一个选项!");
+		$("html,body").animate({scrollTop:$("#md${theme.id}").offset().top-80},1000);
+		return false;
+	}
+	[/#if]
+	[/#if]
+	[#else]
+	if($("#theme${theme.id}").val()==""){
+		alert("该项不能为空!");
+		$("html,body").animate({scrollTop:$("#md${theme.id}").offset().top-80},1000);
+		$("#theme${theme.id}").focus();
+		return false;
+	}
+	[/#if]
+	[/#list]
+	[/@SurveyTheme]
+	return true;
+}
+</script>
+<!--flink-->
+[#include "../../doc/include/友情链接栏.html"/]
+<!--flink-->
+<!--footer--> 
+[#include "../../doc/include/页脚.html"/] 
+<!--/footer-->
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+	<channel>
+		<title>${site.name}</title>
+		<link>#</link>
+		<description>Latest 50 infos of XXX</description>
+		<copyright>Copyright(C) XXX</copyright>
+		<generator>XXX</generator>
+		<lastBuildDate>Sat, 03 Apr 2020 02:07:54 +0000</lastBuildDate>
+		<ttl>60</ttl>
+		[@DocList count='50']
+		[#list list as a]
+		<item>
+			<title><![CDATA[${a.title}]]></title>
+			<description><![CDATA[${a.description!}]]></description>
+			<link>${a.url}</link>
+			<guid>${a.url}</guid>
+			<category>${a.ctgName}</category>
+			<author><![CDATA[${a.author!'本站编辑'}]]></author>
+			<pubDate>${a.releaseDate}</pubDate>
+		</item>
+		[/#list]
+		[/@DocList]
+	</channel>
+</rss>

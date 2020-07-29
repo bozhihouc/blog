@@ -1,0 +1,62 @@
+	<section class="top-search-wrap s b">
+		<h1><a href="${base}/">XXX银行</a></h1>
+        <div class="top-search fr">
+			<div id="search">
+				<form action="${base}/query.jsp" name="search" id="search" method="post" onsubmit="return checkval();">
+                    <div id="search">
+                        <div class="bar">
+                            <div class="item" id="item"> <span>新闻</span>
+                                <ul>
+                                    [@ModelList]
+                                    [#assign mId1 = list[0].id]
+                                    [#list list as model]
+                                    <li id="model${model.id}">${model.name!}</li>
+                                    [/#list]
+                                    [/@ModelList]
+                                </ul>
+                            </div>
+                            <div class="sText"><input type="text" value="请输入关键词" onfocus="if(this.value=='请输入关键词')this.value=''" onblur="if(this.value=='')this.value='请输入关键词'" autocomplete="off" name="q"/></div>
+                        </div>
+                        <input type="hidden" name="mId" id="mId" value="${mId1!}"/>
+                        <div class="sSubmit"><input type="submit" value=""/></div>
+                    </div>
+                </form>
+            </div>
+		</div>
+    </section>
+<script language="javascript">
+$(function() {
+	var oItem = document.getElementById('item');
+	var oSpan = oItem.getElementsByTagName('span')[0];
+	var oUl = oItem.getElementsByTagName('ul')[0];
+	var aLi =oUl.getElementsByTagName('li');
+	oItem.onmouseover=function(){
+		oUl.style.display = 'block';
+		for(var i=0;i<aLi.length;i++){
+			aLi[i].index = i;
+			aLi[i].onmouseover=function(){
+				this.style.background = '#C8E1EA';
+				if(this.index!=aLi.length-1){
+					this.style.color ='#ff3300';
+				}
+			}
+			aLi[i].onmouseout=function(){
+				this.style.background = 'none';
+				this.style.color ='';
+			}
+			aLi[i].onclick=function(){
+				if(this.index!=aLi.length){
+					oSpan.innerHTML = this.innerHTML;
+					oUl.style.display = 'none';
+					var idstr = $(this).attr("id");
+					var id = idstr.substring(5);
+					$("#mId").val(id);
+				}
+			}
+		}
+	}
+	oItem.onmouseout=function(){
+		oUl.style.display = 'none';
+	}
+})
+</script>

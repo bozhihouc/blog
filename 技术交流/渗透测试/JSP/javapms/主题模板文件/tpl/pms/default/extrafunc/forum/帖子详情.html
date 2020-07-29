@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>帖子详情 - ${site.name} - Powered by XXX</title>
+<meta content="${site.keywords!}" name="keywords" />
+<meta content="${site.description!}" name="description" />
+<meta name="author" content="javapms"/>
+<meta name="copyright" content="Copyright &copy; 2020 - 2020 All Rights Reserved."/>
+<link rel="shortcut icon" href="/${skin}/img/favicon.ico">
+<link href="/${skin}/css/style.css" rel="stylesheet"/>
+<link href="/${skin}/css/bbs.css" rel="stylesheet"/>
+<script src="${comm}/js/jquery.js"></script>
+<script src="/${skin}/js/com.js"></script>
+<!--[if IE]><script src="/${skin}/js/html5.js"></script><![endif]-->
+</head>
+
+<body>
+<!--header-->
+<header>
+	<!--top-->
+	[#include "../../doc/include/顶栏.html"/]
+	<!--/top-->
+    
+    <!-- top_search -->
+    [#include "../../doc/include/搜索栏.html"/]
+    <!-- /top_search -->
+
+	<!-- nav -->
+	[#include "../../doc/include/导航栏.html"/]
+    <!-- /nav -->
+</header>
+<!--/header--> 
+
+<!--main-->
+<section class="s b mt5">
+  <ul class="path fl">
+    <li><a href="${base}/">首页</a></li>
+    <li><a href="${base}/forum.jsp">论坛交流</a></li>
+    <li><a href="${theme.forum.url!}">${theme.forum.name!?html}</a></li>
+    <li class="last"><a href="${theme.url!}" title="${theme.title!?html}">[@StrLimit s=theme.title!?html l='30'/]</a></li>
+  </ul>
+</section>
+<section class="s bor pb10">
+[@Posts tId=theme.id count='10']
+                <div class="w98 pb5 mt10 b sLine2">
+                	<a href="${base}/themeInput-${theme.forum.id!}.jsp" class="abtn"><img src="/${skin}/img/bbs/icon3.gif"/><b>发布帖子</b></a>
+                	<a href="${base}/replyInput-${theme.id!}.jsp" class="abtn"><img src="/${skin}/img/bbs/icon4.gif"/><b>回复帖子</b></a>
+                    <div class="fr">[@Page pageType='1'/]</div>
+                </div>
+                <div class="floor w98 sLine2">                
+                [#list page.content as posts]
+                <table width="100%" class="floor_table[#if posts_index!=0] mt10[/#if]">
+                    <tr>
+                        <td rowspan="2" class="floor_left">
+                            <div class="floor_info">
+                                <div class="face">
+                                <img [#if posts.creater.member??&&posts.creater.member.avatar??]src="${base}${posts.creater.member.avatar!}"[#else]src="/${skin}/img/face.png"[/#if] alt="${posts.creater.username!?html}"/>
+                                </div>
+                                <div class="name">${posts.creater.username!?html}</div>
+                                <div class="level">
+                                    <div>
+                                    [#if posts.creater.admin??]
+                                    管理员
+                                    [#else]
+                                    ${posts.creater.member.getGroup(site.id).name!?html}
+                                    [/#if]
+                                    </div>
+                                    <img src="/${skin}/img/bbs/xing1.gif" alt="javapms新手">
+                                </div>
+                                <ul class="integral b">
+									<li><em>发布主题：</em><span>[#if posts.creater.userForum??]${posts.creater.userForum.themeCount!}[#else]0[/#if]</span></li>
+									<li><em>回复帖子：</em><span>[#if posts.creater.userForum??]${posts.creater.userForum.replyCount!}[#else]0[/#if]</span></li>
+									<li><em>获得积分：</em><span>[#if posts.creater.userForum??]${posts.creater.userForum.point!}[#else]0[/#if]</span></li>                                    
+									<li><em>注册日期：</em><span>
+                                    [#if posts.creater.admin??]
+                                    ${posts.creater.admin.registerTime?string("yyyy-MM-dd")}
+                                    [#else]
+                                    ${posts.creater.member.registerTime?string("yyyy-MM-dd")}
+                                    [/#if]
+                                    </span></li>
+									<li><em>最后登录：</em><span>
+                                    [#if posts.creater.admin??]
+                                    ${posts.creater.admin.lastLoginTime?string("yyyy-MM-dd")}
+                                    [#else]
+                                    ${posts.creater.member.lastLoginTime?string("yyyy-MM-dd")}
+                                    [/#if]
+                                    </span></li>
+								</ul>
+                            </div>
+                        </td>
+                        <td class="box_wrap floor_right">
+                            <div class="fl"><div class="floor_arrow"><em></em><span></span></div></div>
+                            [#if posts.floor == 1]
+                            <div class="floor_title b">
+                            	<h1>${posts.title!?html}</h1>
+                                <div class="post_num">
+                                    <ul class="b">
+                                        <li>浏览：<em>[@ThemeStatis id=theme.id]${viewsCount!}[/@ThemeStatis]</em></li>
+                                        <li>回复：<em>${theme.replyCount!}</em></li>
+                                    </ul>
+                                </div>                                
+                            </div>
+                            [/#if]
+                            <div class="b"></div>
+                            <div class="floor_top_tips b">
+                                <div style="position:relative;"><span class="lou">#${posts.floor!}</span></div>
+                                <span class="fl">发布于：${posts.createTime?string("yyyy-MM-dd HH:mm:ss")}</span>
+                            </div>
+                            <div class="editor_content">
+                                [#assign showhidden = false]
+								[#if posts.status==-1]
+						        [#if user??&&user.admin??]                                  
+								<div class="quote">
+                                    ${posts.contentAll!?html}
+								</div>
+						        [#else]
+						          <div class="shield">此帖内容违反规定，已被管理员屏蔽！</div>
+						        [/#if]
+						        [#else]
+						        [#if user??]
+						        [#if posts.creater.id==user.id||user.admin??]
+						        [#assign showhidden = true]
+						        [#else]
+                                [#if posts.theme.replyUser?contains(','+user.id+',')]
+						        [#assign showhidden = true]
+						        [/#if]
+						        [/#if]
+						        [/#if]
+						          ${posts.getContentAndQuote(showhidden)!}
+						        [/#if]
+                           </div>						                   
+                        </td>
+                    </tr>
+                    <tr>
+						<td class="box_wrap floor_bottom" valign="bottom">
+                            <div class="signature" style="max-height:200px;maxHeight:200px;">
+                            这家伙很懒，什么话都没留下
+                            </div>
+                            <div class="floor_bottom_tips b">
+                                [#if user??&&user.admin??]
+                                <div class="fr">
+                                    [#if posts.floor == 1]
+									<a href="javascript:void(0);" onclick="tt('${posts.theme.id}')" class="abtn"><img src="/${skin}/img/bbs/icon5.gif"/><b>置顶</b></a>									
+									<a href="javascript:void(0);" onclick="light('${posts.theme.id}')" class="abtn"><img src="/${skin}/img/bbs/icon6.gif"/><b>高亮</b></a>
+									<a href="javascript:void(0);" onclick="lock('${posts.theme.id}')" class="abtn"><img src="/${skin}/img/bbs/icon1.gif"/><b>锁定</b></a>
+                                    [/#if]
+                                    <a href="javascript:void(0);" onclick="sp('${posts.id}')" class="abtn"><img src="/${skin}/img/bbs/icon2.gif"/><b>屏蔽</b></a>
+                                </div>
+                                [/#if]
+                                <a href="${base}/quoteInput-${posts.id}.jsp" class="a_reply J_read_reply">引用</a>
+                                <a href="${base}/replyInput-${theme.id!}-${posts.floor}.jsp" class="a_reply J_read_reply">回复</a>
+							</div>
+                        </td>
+                    </tr>
+                </table>
+                [/#list]
+                </div>
+                <div class="w98 mt10 b">
+                	<a href="${base}/themeInput-${theme.forum.id!}.jsp" class="abtn"><img src="/${skin}/img/bbs/icon3.gif"/><b>发布帖子</b></a>
+                	[#if !theme.lock]
+                	<a href="${base}/replyInput-${theme.id!}.jsp" class="abtn"><img src="/${skin}/img/bbs/icon4.gif"/><b>回复帖子</b></a>
+                	[/#if]
+                    <div class="fr">[@Page pageType='1'/]</div>
+                </div> 
+                [/@Posts]
+</section>
+<div class="s mt10 pb10 sbg bor" id="reply">
+    <div class="tit"><h2>快速回复</h2></div>
+	<form action="${base}/replySave.jsp" name="themeSave" id="themeSave" method="post" enctype="multipart/form-data">
+    <div class="mt5 b">
+        <dl class="reply_quick fl ml10">
+        	<dt>
+            [#if user??]
+            <img [#if user.member??&&user.member.avatar??]src="${base}${user.member.avatar!}"[#else]src="/${skin}/img/face.png"[/#if] alt="${user.username!?html}"/><p>${user.username!?html}</p>
+            [#else]
+            <img src="/${skin}/img/face.png" alt="匿名网友"/><p>匿名网友</p>
+            [/#if]
+            </dt>
+        	<dd>
+            	<div class="arrow"><em></em><span></span></div>
+                [#if user??]
+            	<p><textarea name="content" class="reply"></textarea></p>
+            	<p class="mt5">
+                <input type="hidden" name="themeId" value="${theme.id}"/>
+                <button type="submit" class="btn btn_submit btn_big">回复</button></p>
+                [#else]
+                <div class="notlogin">您需要登录后才可以回帖，请<a href="${base}/login.jsp" class="blue">【登录】</a> 或 <a href="${base}/reg.jsp" class="blue">【注册】</a></div>
+                [/#if]
+            </dd>
+        </dl>
+        <div class="tip rtip fl ml10"><span class="ico"></span>请遵守国家相关法律和本站规定，禁止发布反动言论及其它不相关广告等内容，一经发现将被屏蔽或封号处理，谢谢合作！</div>
+    </div>
+    </form>
+</div>
+<!--/main--> 
+
+<!--flink-->
+[#include "../../doc/include/友情链接栏.html"/]
+<!--/flink-->
+
+<!--footer--> 
+[#include "../../doc/include/页脚.html"/] 
+<!--/footer-->
+[#include "帖子操作.html"/]
+<script src="${base}/plugin/artdialog/jquery.artDialog.source.js?skin=chrome"></script>
+<script src="${base}/plugin/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+</body>
+</html>
