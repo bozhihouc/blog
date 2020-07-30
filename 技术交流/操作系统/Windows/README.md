@@ -26,3 +26,7 @@ sc create 服务名称 start= auto binPath= "C:\haya.exe"
 ````angular2html
 sc delete 服务名称
 ````
+### 命令行开启3389(远程桌面)
+```angular2html
+REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f
+```
