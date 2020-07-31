@@ -13,13 +13,14 @@
 
 ### my.ini文件配置
 ```angular2html
-basedir = C:\mysql-5.6.49（mysql所在目录）
-datadir = C:\mysql-5.6.49\data（mysql所在目录\data）
+
 [mysql]  
 # 设置 mysql 客户端默认字符集  
 default-character-set=utf8mb4 
  
-[mysqld]  
+[mysqld]
+basedir = C:\mysql-5.6.49（mysql所在目录）
+datadir = C:\mysql-5.6.49\data（mysql所在目录\data）
 #设置 3306 端口，不配置默认3306
 port = 3306  
 
