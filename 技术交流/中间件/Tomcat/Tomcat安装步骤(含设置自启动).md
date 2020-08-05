@@ -51,5 +51,23 @@ service.bat install/remove
 ```
 ![avatar](images/tomcat_01.png)
 
+### 普通用户权限启动
+#### 创建新用户
+```angular2html
+控制面板->计算机管理->本地用户和组->用户->新用户
+```
+![avatar](images/tomcat_03.png)
+```angular2html
+右键新用户->属性：设置远程控制和隶属组，设置成下图
+```
+![avatar](images/tomcat_04.png)
+![avatar](images/tomcat_05.png)
+
+#### 修改服务登录账户
+```angular2html
+管理工具->服务
+```
+![avatar](images/tomcat_06.png)
+点击应用后，重启服务即可完成
 
 > 乾坤未定，你我皆是黑马
