@@ -19,7 +19,7 @@ JAVA_HOME C:\Java\jdk1.8.0_251
 这台电脑->属性->高级配置->环境变量
 用户变量
 CATALINA_HOME
-C:\apache-tomcat-7.0.69\bin
+C:\apache-tomcat-7.0.69\
 ```
 ### 配置path
 ```angular2html
