@@ -29,7 +29,7 @@ path
 
 ### 配置启动信息(！！！重要)
 ```angular2html
-在CATALINA_HOME（C:\apache-tomcat-7.0.69\bin：压缩包解压后目录）目录下找到
+在CATALINA_HOME（C:\apache-tomcat-7.0.69：压缩包解压后目录）目录下找到
 
 setclasspath.bat
 
