@@ -1,8 +1,0 @@
-
-<ul class="nlist w94 mt20">
- [#list list as a]
- <li><a href="${a.url}" title="${a.title!}" target="_blank">[@StrLimit s=a.title l='40'/]</a><em>${a.date?string('yyyy-MM-dd')}</em></li>
- [#if (a_index+1)%5 = 0]<li class="bb"></li>[/#if]
- [/#list]
-</ul>
-[#if isPage]<div class="pagebar">[@Page pageType='1'/]</div>[/#if]
