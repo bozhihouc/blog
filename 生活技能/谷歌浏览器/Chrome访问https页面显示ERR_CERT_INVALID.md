@@ -7,6 +7,7 @@
 开始编辑～
 ```
 
+
 ### 方法
 ```angular2html
 在chrome该页面上，直接键盘敲入这12个字符：`thisisunsafe`
