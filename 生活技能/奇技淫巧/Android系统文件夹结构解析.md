@@ -6,14 +6,17 @@
 ```
 开始编写
 ```
+```angular2html
+https://sites.google.com/site/jerryjianjun/android/android-xi-tong-wen-jian-jia-jie-gou-jie-xi
+```
 ### \system\app
 
-这个里面主要存放的是常规下载的应用程序，可以看到都是以APK格式结尾的文件。在这个文件夹下的程序为系统默认的组件，自己安装的软件将不会出现在这里，而是\data\文件夹中。
-
+```这个里面主要存放的是常规下载的应用程序，可以看到都是以APK格式结尾的文件。在这个文件夹下的程序为系统默认的组件，自己安装的软件将不会出现在这里，而是\data\文件夹中。
+```
 ### \system\bin
 
 这个目录下的文件都是系统的本地程序，从bin文件夹名称可以看出是binary二进制的程序，里面主要是Linux系统自带的组件，Android手机网就主要文件做下简单的分析介绍：
-\system\bin\akmd
+```\system\bin\akmd
 \system\bin\am
 \system\bin\app_process 系统进程
 \system\bin\dalvikvm Dalvik虚拟机宿主
@@ -62,10 +65,11 @@
 \system\bin\wlan_loader
 \system\bin\wpa_cli
 \system\bin\wpa_supplicant
-
+```
 ### \system\etc
 从文件夹名称来看保存的都是系统的配置文件，比如APN接入点设置等核心配置。
-\system\etc\apns-conf.xml APN接入点配置文件
+
+```\system\etc\apns-conf.xml APN接入点配置文件
 \system\etc\AudioFilter.csv 音频过滤器配置文件
 \system\etc\AudioPara4.csv
 \system\etc\bookmarks.xml 书签数据库
@@ -101,10 +105,11 @@
 \system\etc\wifi\Fw1251r1c.bin
 \system\etc\wifi\tiwlan.ini
 \system\etc\wifi\wpa_supplicant.conf WPA验证组件
-
+```
 ### \system\fonts
 字体文件夹，除了标准字体和粗体、斜体外可以看到文件体积最大的可能是中文字库，或一些unicode字库，从T-Mobile G1上可以清楚的看到显示简体中文正常，其中DroidSansFallback.ttf文件大小
-\system\fonts\DroidSans-Bold.ttf
+
+```\system\fonts\DroidSans-Bold.ttf
 \system\fonts\DroidSans.ttf
 \system\fonts\DroidSansFallback.ttf
 \system\fonts\DroidSansMono.ttf
@@ -112,10 +117,12 @@
 \system\fonts\DroidSerif-BoldItalic.ttf
 \system\fonts\DroidSerif-Italic.ttf
 \system\fonts\DroidSerif-Regular.ttf
+```
 
 ### \system\framework
 framework主要是一些核心的文件，从后缀名为jar可以看出是是系统平台框架。
-\system\framework\am.jar
+
+```\system\framework\am.jar
 \system\framework\am.odex
 \system\framework\android.awt.jar AWT库
 \system\framework\android.awt.odex
@@ -150,7 +157,7 @@ framework主要是一些核心的文件，从后缀名为jar可以看出是是�
 \system\framework\ssltest.odex
 \system\framework\svc.jar 系统服务
 \system\framework\svc.odex
-
+```
 ### \system\lib
 lib目录中存放的主要是系统底层库，如平台运行时库。
 
