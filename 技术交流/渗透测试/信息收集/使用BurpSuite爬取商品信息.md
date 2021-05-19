@@ -1,4 +1,4 @@
-# 使用BurpSuite爬去商品信息
+# 使用BurpSuite爬取商品信息
 `@Time   : 2021/5/19 上午9:36`
 `@Author : 852782749@qq.com`
 
