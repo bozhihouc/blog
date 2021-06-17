@@ -1,4 +1,4 @@
-# 在CentOS 8中安装 docker-compose
+# CentOS 8 中安装 docker-compose
 `@Time   : 2021/6/17 下午2:41`
 `@Author : 852782749@qq.com`
 
