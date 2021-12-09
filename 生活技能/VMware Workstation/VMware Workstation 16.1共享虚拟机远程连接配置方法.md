@@ -35,6 +35,8 @@ VMware Workstation 16.1显示共享虚拟机（已弃用），但是可以临时
 
 ### 遇到的坑
 #### `无法连接 MKS: Failed to connect to server xx.xx.xx.xx:903`
+![avatar](images/05.png)
+
 ```angular2html
 以下内容把共享虚拟机的电脑称为服务端，连接共享虚拟机的电脑称为客户端
 
