@@ -64,9 +64,8 @@ installerDefaults.dataCollectionEnabled.epoch = "10100"
 > 
 > 服务端只开放了902、912端口，所以在客户端加载服务端配置的时候，获取和连接的都是`903`端口，而不是一直处于运行中的`902`端口；
 ![avatar](images/04.png)
-```angular2html
 
-```
+> 细心观察，细心细心细心；
 
 
 > 乾坤未定，你我皆是黑马
