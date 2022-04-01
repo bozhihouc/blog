@@ -13,3 +13,7 @@ docker ps
 ```angular2html
 docker exec -it 容器ID /bin/bash
 ```
+### 拷贝文件到容器
+```angular2html
+docker cp /deyes.zip 容器ID:/tmp/
+```
