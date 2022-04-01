@@ -17,3 +17,5 @@ docker exec -it 容器ID /bin/bash
 ```angular2html
 docker cp /deyes.zip 容器ID:/tmp/
 ```
+
+test
